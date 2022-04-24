@@ -1,9 +1,12 @@
 package guru.springframework.services;
 
 import guru.springframework.commands.ProductForm;
+import guru.springframework.controllers.ProductController;
 import guru.springframework.converters.ProductFormToProduct;
 import guru.springframework.domain.Product;
 import guru.springframework.repositories.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ import java.util.List;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
 
     private ProductRepository productRepository;
     private ProductFormToProduct productFormToProduct;
@@ -41,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product saveOrUpdate(Product product) {
         productRepository.save(product);
+        log.info("Product saveOrUpdate - ID: {}", product.getId());
         return product;
     }
 
@@ -51,9 +56,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product saveOrUpdateProductForm(ProductForm productForm) {
+        log.info("ProductForm before saveOrUpdate : {}", productForm);
         Product savedProduct = saveOrUpdate(productFormToProduct.convert(productForm));
-
-        System.out.println("Saved Product Id: " + savedProduct.getId());
+        log.info("ProductForm saveOrUpdate - ID: {}", savedProduct.getId());
         return savedProduct;
     }
 }

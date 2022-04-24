@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
-
 /**
  * Created by jt on 1/10/17.
  */
 @Controller
 public class ProductController {
+
     private ProductService productService;
 
     private ProductToProductForm productToProductForm;
@@ -66,7 +65,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)
-    public String saveOrUpdateProduct(@Valid ProductForm productForm, BindingResult bindingResult){
+    public String saveOrUpdateProduct(ProductForm productForm, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
             return "product/productform";
